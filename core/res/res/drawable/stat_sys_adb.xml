@@ -21,3 +21,14 @@
         android:src="@drawable/stat_sys_adb_am"
         android:autoMirrored="true">
 </bitmap>
+<!--
+	Animated ADB logo 
+	nom nom nom
+-->
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:drawable="@drawable/stat_sys_adb_2" android:duration="100" />
+    <item android:drawable="@drawable/stat_sys_adb_3" android:duration="100" />
+    <item android:drawable="@drawable/stat_sys_adb_2" android:duration="100" />
+    <item android:drawable="@drawable/stat_sys_adb_1" android:duration="100" />
+</animation-list>
+
