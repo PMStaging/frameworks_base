@@ -3611,6 +3611,17 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                 if (mSettingsContainer != null) {
                     mQS.setupQuickSettings();
                     mSettingsContainer.updateResources();
+            }else if (uri.equals(Settings.PAC.getUriFor(
+                    Settings.PAC.NOTIFICATION_BACKGROUND))
+                || uri.equals(Settings.PAC.getUriFor(
+                    Settings.PAC.NOTIFICATION_BACKGROUND_LANDSCAPE))
+                || uri.equals(Settings.PAC.getUriFor(
+                    Settings.PAC.NOTIFICATION_BACKGROUND_ALPHA))) {
+                if (mNotificationPanel != null) {
+                    mNotificationPanel.setBackgroundDrawables();
+                }
+                if (mSettingsPanel != null) {
+                    mSettingsPanel.setBackgroundDrawables();
                 }
             } else if (mSettingsContainer != null) {
                 mQS.setupQuickSettings();
@@ -3669,6 +3680,36 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             cr.registerContentObserver(
                     Settings.System.getUriFor(Settings.System.QUICK_SETTINGS_SMALL_ICONS),
                     false, this, UserHandle.USER_ALL);
+
+            cr.registerContentObserver(
+                    Settings.PAC.getUriFor(Settings.PAC.NOTIFICATION_BACKGROUND),
+                    false, this, UserHandle.USER_ALL);
+
+            cr.registerContentObserver(
+                    Settings.PAC.getUriFor(Settings.PAC.NOTIFICATION_BACKGROUND_LANDSCAPE),
+                    false, this, UserHandle.USER_ALL);
+
+            cr.registerContentObserver(
+                    Settings.PAC.getUriFor(Settings.PAC.NOTIFICATION_BACKGROUND_ALPHA),
+                    false, this, UserHandle.USER_ALL);
+
+        }
+    }
+
+    private static String SHA1(String text) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-1");
+            md.update(text.getBytes("iso-8859-1"), 0, text.length());
+            byte[] sha1hash = md.digest();
+            return convertToHex(sha1hash);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
         }
     }
