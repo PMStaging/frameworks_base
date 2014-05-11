@@ -24,6 +24,7 @@ import static com.android.internal.util.cm.QSConstants.TILE_BLUETOOTH;
 import static com.android.internal.util.cm.QSConstants.TILE_BRIGHTNESS;
 import static com.android.internal.util.cm.QSConstants.TILE_CAMERA;
 import static com.android.internal.util.cm.QSConstants.TILE_COMPASS;
+import static com.android.internal.util.cm.QSConstants.TILE_CPUFREQ;
 import static com.android.internal.util.cm.QSConstants.TILE_DELIMITER;
 import static com.android.internal.util.cm.QSConstants.TILE_EXPANDEDDESKTOP;
 import static com.android.internal.util.cm.QSConstants.TILE_GPS;
@@ -74,6 +75,7 @@ import com.android.systemui.quicksettings.BrightnessTile;
 import com.android.systemui.quicksettings.BugReportTile;
 import com.android.systemui.quicksettings.CameraTile;
 import com.android.systemui.quicksettings.CompassTile;
+import com.android.systemui.quicksettings.CPUFreqTile;
 import com.android.systemui.quicksettings.DockBatteryTile;
 import com.android.systemui.quicksettings.EqualizerTile;
 import com.android.systemui.quicksettings.ExpandedDesktopTile;
@@ -166,6 +168,7 @@ public class QuickSettingsController {
 
         // Filter items not compatible with device
         boolean cameraSupported = QSUtils.deviceSupportsCamera();
+        boolean cpufreqSupported = QSUtils.deviceSupportsCPUFreq();
         boolean bluetoothSupported = QSUtils.deviceSupportsBluetooth();
         boolean mobileDataSupported = QSUtils.deviceSupportsMobileData(mContext);
         boolean lteSupported = QSUtils.deviceSupportsLte(mContext);
@@ -297,6 +300,10 @@ public class QuickSettingsController {
                 }
             } else if (tile.equals(TILE_COMPASS)) {
                 qs = new CompassTile(mContext, this);
+            } else if (tile.contains(TILE_CPUFREQ)) {
+                if (cpufreqSupported) {
+                    qs = new CPUFreqTile(mContext, this);
+                }
             }
 
             if (qs != null) {
