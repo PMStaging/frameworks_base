@@ -166,7 +166,6 @@
 
     <string name="immersive_mode_confirmation_bottom">Swipe up from the bottom to exit full screen.</string>
 
-<<<<<<< HEAD
     <!-- App ops requests -->
     <string name="app_ops_access_camera">access the camera</string>
     <string name="app_ops_access_location">access your location</string>
