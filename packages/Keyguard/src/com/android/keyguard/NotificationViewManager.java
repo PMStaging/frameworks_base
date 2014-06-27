@@ -69,6 +69,9 @@ public class NotificationViewManager {
         public boolean forceExpandedView = false;
         public boolean wakeOnNotification = false;
         public int notificationsHeight = 4;
+        public float offsetTop = 0.3f;
+        public boolean privacyMode = false;
+
 
         public Configuration(Handler handler) {
             super(handler);
@@ -95,6 +98,10 @@ public class NotificationViewManager {
                     Settings.PAC.LOCKSCREEN_NOTIFICATIONS_WAKE_ON_NOTIFICATION), false, this);
             resolver.registerContentObserver(Settings.PAC.getUriFor(
                     Settings.PAC.LOCKSCREEN_NOTIFICATIONS_HEIGHT), false, this);
+            resolver.registerContentObserver(Settings.PAC.getUriFor(
+                    Settings.PAC.LOCKSCREEN_NOTIFICATIONS_OFFSET_TOP), false, this);
+            resolver.registerContentObserver(Settings.PAC.getUriFor(
+                    Settings.PAC.LOCKSCREEN_NOTIFICATIONS_PRIVACY_MODE), false, this);
         }
 
         @Override
@@ -111,16 +118,22 @@ public class NotificationViewManager {
                     Settings.PAC.LOCKSCREEN_NOTIFICATIONS_HIDE_LOW_PRIORITY, hideLowPriority ? 1 : 0) == 1;
             hideNonClearable = Settings.PAC.getInt(mContext.getContentResolver(),
                     Settings.PAC.LOCKSCREEN_NOTIFICATIONS_HIDE_NON_CLEARABLE, hideNonClearable ? 1 : 0) == 1;
+            privacyMode = Settings.PAC.getInt(mContext.getContentResolver(),
+                    Settings.PAC.LOCKSCREEN_NOTIFICATIONS_PRIVACY_MODE, privacyMode ? 1 : 0) == 1;
             dismissAll = Settings.PAC.getInt(mContext.getContentResolver(),
                     Settings.PAC.LOCKSCREEN_NOTIFICATIONS_DISMISS_ALL, dismissAll ? 1 : 0) == 1;
             expandedView = Settings.PAC.getInt(mContext.getContentResolver(),
-                    Settings.PAC.LOCKSCREEN_NOTIFICATIONS_EXPANDED_VIEW, expandedView ? 1 : 0) == 1;
+                    Settings.PAC.LOCKSCREEN_NOTIFICATIONS_EXPANDED_VIEW, expandedView ? 1 : 0) == 1
+                    && !privacyMode;
             forceExpandedView = Settings.PAC.getInt(mContext.getContentResolver(),
-                    Settings.PAC.LOCKSCREEN_NOTIFICATIONS_FORCE_EXPANDED_VIEW, forceExpandedView ? 1 : 0) == 1;
+                    Settings.PAC.LOCKSCREEN_NOTIFICATIONS_FORCE_EXPANDED_VIEW, forceExpandedView ? 1 : 0) == 1
+                    && !privacyMode;
             wakeOnNotification = Settings.PAC.getInt(mContext.getContentResolver(),
                     Settings.PAC.LOCKSCREEN_NOTIFICATIONS_WAKE_ON_NOTIFICATION, forceExpandedView ? 1 : 0) == 1;
             notificationsHeight = Settings.PAC.getInt(mContext.getContentResolver(),
                     Settings.PAC.LOCKSCREEN_NOTIFICATIONS_HEIGHT, notificationsHeight);
+            offsetTop = Settings.PAC.getFloat(mContext.getContentResolver(),
+                    Settings.PAC.LOCKSCREEN_NOTIFICATIONS_OFFSET_TOP, offsetTop);
         }
     }
 
