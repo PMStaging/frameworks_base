@@ -687,8 +687,9 @@ public class KeyguardViewManager {
 
         if (mLockscreenNotifications) {
             mNotificationView = (NotificationHostView)mKeyguardView.findViewById(R.id.notification_host_view);
-            mNotificationViewManager.onScreenTurnedOff();
             mNotificationViewManager.setHostView(mNotificationView);
+            mNotificationViewManager.onScreenTurnedOff();
+            mNotificationView.addNotifications();
         }
 
         // HACK
