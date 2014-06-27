@@ -80,6 +80,7 @@ public class NotificationViewManager {
         public int notificationsHeight = 4;
         public float offsetTop = 0.3f;
         public boolean privacyMode = false;
+        public int notificationColor = 0x55555555;
 
 
         public Configuration(Handler handler) {
@@ -113,6 +114,8 @@ public class NotificationViewManager {
                     Settings.PAC.LOCKSCREEN_NOTIFICATIONS_PRIVACY_MODE), false, this);
             resolver.registerContentObserver(Settings.PAC.getUriFor(
                     Settings.PAC.LOCKSCREEN_NOTIFICATIONS_EXCLUDED_APPS), false, this);
+            resolver.registerContentObserver(Settings.PAC.getUriFor(
+                    Settings.PAC.LOCKSCREEN_NOTIFICATIONS_COLOR), false, this);
         }
 
         @Override
@@ -147,6 +150,8 @@ public class NotificationViewManager {
                     Settings.PAC.LOCKSCREEN_NOTIFICATIONS_OFFSET_TOP, offsetTop);
             String excludedApps = Settings.PAC.getString(mContext.getContentResolver(),
                     Settings.PAC.LOCKSCREEN_NOTIFICATIONS_EXCLUDED_APPS);
+            notificationColor = Settings.PAC.getInt(mContext.getContentResolver(),
+                    Settings.PAC.LOCKSCREEN_NOTIFICATIONS_COLOR, notificationColor);
 
             createExcludedAppsSet(excludedApps);
         }
