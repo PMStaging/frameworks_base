@@ -677,12 +677,6 @@ public class KeyguardViewManager {
             mKeyguardHost.removeView(v);
         }
 
-        if (mLockscreenNotifications) {
-            // Make sure that the notification listener is registered before
-            // the notification host view is inflated because it's needed then
-            mNotificationViewManager.registerListeners();
-        }
-
         final LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.keyguard_host_view, mKeyguardHost, true);
         mKeyguardView = (KeyguardHostView) view.findViewById(R.id.keyguard_host_view);
@@ -693,7 +687,7 @@ public class KeyguardViewManager {
 
         if (mLockscreenNotifications) {
             mNotificationView = (NotificationHostView)mKeyguardView.findViewById(R.id.notification_host_view);
-            mNotificationView.bringToFront();
+            mNotificationViewManager.onScreenTurnedOff();
             mNotificationViewManager.setHostView(mNotificationView);
         }
 
@@ -814,6 +808,10 @@ public class KeyguardViewManager {
     public synchronized void onScreenTurnedOn(final IKeyguardShowCallback callback) {
         if (DEBUG) Log.d(TAG, "onScreenTurnedOn()");
         mScreenOn = true;
+
+        if (mLockscreenNotifications) {
+            mNotificationViewManager.onScreenTurnedOn();
+        }
 
         // If keyguard is not showing, we need to inform PhoneWindowManager with a null
         // token so it doesn't wait for us to draw...
