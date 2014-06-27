@@ -80,6 +80,7 @@ public class NotificationViewManager {
         public int notificationsHeight = 4;
         public float offsetTop = 0.3f;
         public boolean privacyMode = false;
+        public boolean dynamicWidth = true;
         public int notificationColor = 0x55555555;
 
         public Configuration(Handler handler) {
@@ -111,6 +112,8 @@ public class NotificationViewManager {
                     Settings.PAC.LOCKSCREEN_NOTIFICATIONS_OFFSET_TOP), false, this);
             resolver.registerContentObserver(Settings.PAC.getUriFor(
                     Settings.PAC.LOCKSCREEN_NOTIFICATIONS_PRIVACY_MODE), false, this);
+            resolver.registerContentObserver(Settings.PAC.getUriFor(
+                    Settings.PAC.LOCKSCREEN_NOTIFICATIONS_DYNAMIC_WIDTH), false, this);
             resolver.registerContentObserver(Settings.PAC.getUriFor(
                     Settings.PAC.LOCKSCREEN_NOTIFICATIONS_EXCLUDED_APPS), false, this);
             resolver.registerContentObserver(Settings.PAC.getUriFor(
@@ -147,6 +150,8 @@ public class NotificationViewManager {
                     Settings.PAC.LOCKSCREEN_NOTIFICATIONS_HEIGHT, notificationsHeight);
             offsetTop = Settings.PAC.getFloat(mContext.getContentResolver(),
                     Settings.PAC.LOCKSCREEN_NOTIFICATIONS_OFFSET_TOP, offsetTop);
+            dynamicWidth = Settings.PAC.getInt(mContext.getContentResolver(),
+                    Settings.PAC.LOCKSCREEN_NOTIFICATIONS_DYNAMIC_WIDTH, dynamicWidth ? 1 : 0) == 1;
             String excludedApps = Settings.PAC.getString(mContext.getContentResolver(),
                     Settings.PAC.LOCKSCREEN_NOTIFICATIONS_EXCLUDED_APPS);
             notificationColor = Settings.PAC.getInt(mContext.getContentResolver(),

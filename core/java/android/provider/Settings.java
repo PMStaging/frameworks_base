@@ -7921,7 +7921,7 @@ public final class Settings {
          * with that name. Note that internally setting values are always
          * stored as strings, so this function converts the given value to a
          * string before storing it.
-         * 
+         *
          * @param cr The ContentResolver to access.
          * @param name The name of the setting to modify.
          * @param value The new value for the setting.
@@ -8165,6 +8165,12 @@ public final class Settings {
          * @hide
          */
         public static final String LOCKSCREEN_NOTIFICATIONS_PRIVACY_MODE = "lockscreen_notifications_privacy_mode";
+
+        /**
+         * Enables dynamic with for shown notifications
+         * @hide
+         */
+        public static final String LOCKSCREEN_NOTIFICATIONS_DYNAMIC_WIDTH = "lockscreen_notifications_dynamic_width";
 
         /**
          * A list of packages to exclude from being displayed as lockscreen notifications.
